@@ -12,6 +12,7 @@
 // This is your helper function. Do not change it in any way.
 // Inputs: character array representing a row; the delimiter character
 // Ouputs: date character array; time character array; steps character array
+
 void tokeniseRecord(const char *input, const char *delimiter,
                     char *date, char *time, char *steps) {
     // Create a copy of the input string as strtok modifies the string
@@ -46,8 +47,8 @@ int main() {
     char choice, filename;
     char record, date[11], time[6], steps[10]; 
     int intsteps, line_count=0, i;
-    int buffer_size=256;    //creating the size of the buffer
-    char buffer[buffer_size];   //creating buffer and its size
+    //int buffer_size = 256;    //creating the size of the buffer
+    //char buffer[buffer_size];   //creating buffer and its size
 
 
 
@@ -63,23 +64,13 @@ int main() {
         printf("Enter choice: ");
         scanf("%c", &choice);
         
-        //choice= toupper(choice);
 
-    // if (choice == 'A') {
-    //     int buffer_size =100;
-    //     char line[buffer_size];
-    //     char filename[buffer_size];
-    
-    //     printf("Input filename: \n");
-    //     fgets(line, buffer_size, stdin);
-    //     sscanf(line, " %s", filename);
-
-    // }
 
     switch (choice){
-        case 'A':    //sort this out
+        case 'A':    //add misspell check
             input_filename();
-            FILE *input = fopen(filename, "r");
+            //FILE *file = fopen(filename,"r");
+            //open_file(filename, "r");         
             break;
 
         case 'B':    

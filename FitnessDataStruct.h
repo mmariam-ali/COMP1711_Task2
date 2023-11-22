@@ -7,15 +7,14 @@
 #include <string.h>
 #include <math.h>
 
-//#define buffer_size 256
-// Define an appropriate struct
+//Define an appropriate struct
 typedef struct {
 	char date[11];
 	char time[6];
-	int steps;
+	char steps;
 } FITNESS_DATA;
 
-// Helper function prototypes
+//Helper function prototypes
 void tokeniseRecord(const char *input, const char *delimiter, char *date, char *time, char *steps);
 
 
@@ -32,17 +31,19 @@ void tokeniseRecord(const char *input, const char *delimiter, char *date, char *
 
 //setting filename
 char *input_filename() {
-    //char filename;
-    int buffer_size =100;
+    int buffer_size =256;
     char line[buffer_size];
-    char filename[buffer_size];
-    
+    char filename;
         printf("Input filename: \n");
-        fgets(line, buffer_size, stdin);
-        sscanf(line, " %s%*s", filename);
-        https://stackoverflow.com/questions/38030681/when-i-put-a-scanf-inside-of-a-switch-case-with-type-char-it-skips-it-entirely-w
+        scanf(" %s ", &filename);
+        printf("%s", filename);
+
+        //fgets(line, buffer_size, stdin);
+        //scanf(line, " %s ", filename);
         
-        return filename;
+        printf("helloooo");
+        printf("%s", filename);
+    return filename;
     //openfile(filename, "r");
 }
 
@@ -50,14 +51,19 @@ char *input_filename() {
 FILE *open_file(char *filename, char *mode) {
     // printf("Input filename: \n");
     // scanf("%c", &filename);
-    FILE *file= fopen(filename, "r");   //open file in read mode and check it isn't empty
-        if (file ==NULL) {
-            perror("Error opening file: file is empty. \n");
-            return 1;
-        }
 
+    //     int buffer_size =256;
+    //     char buffer[buffer_size];
+    //     int line_count=0;
+
+    // FILE *file= fopen(filename, "r");   //open file in read mode and check it isn't empty
+    //     if (file ==NULL) {
+    //         perror("Error opening file: file is empty. \n");
+    //         return 1;
+    //     }
+    // return file; 
+       printf("Helloo");
 }
-
 /**
  * @brief Reads the data from the input file into an array of structs
  *
@@ -66,18 +72,21 @@ FILE *open_file(char *filename, char *mode) {
  * @return int Returns the number of readings from the file
  */
 
-// int read_file(FILE *inputFile, FITNESS_DATA, char *mode) {
-//     FITNESS_DATA fitness_data[9999];   //create struct array 
+//  void *read_file(FILE *inputFile, FITNESS_DATA, char *mode) {
+//     char line_count=0;
+//     int buffer_size = 256;
+//     char buffer[buffer_size]=
+//      FITNESS_DATA fitness_data[9999];   //create struct array 
 
-//         while (fgets(buffer, buffer_size, file)!= NULL) {   //while the line is not empty
-//             line_count++;   //counting the number of lines in the file
+//          while (fgets(buffer, buffer_size, file)!= NULL) {   //while the line is not empty
+//              line_count++;   //counting the number of lines in the file
 
-//             tokeniseRecord(buffer, ",", date, time, steps);    //splitting the line into date, time, steps
-//             strcpy(fitness_data[i].date, date);                //assigning date, time and steps to data struct 
-//             strcpy(fitness_data[i].time, time);
-//             strcpy(fitness_data[i].steps, steps);
-//             i++;                                               //does this for every i; every line in the file
-//         }
-
+//              tokeniseRecord(buffer, ",", date, time, steps);    //splitting the line into date, time, steps
+//              strcpy(fitness_data[i].date, date);                //assigning date, time and steps to data struct 
+//              strcpy(fitness_data[i].time, time);
+//              strcpy(fitness_data[i].steps, steps);
+//              i++;                                               //does this for every i; every line in the file
+//          }
+//  }
 
 #endif // FITNESS_DATA_STRUCT_H
