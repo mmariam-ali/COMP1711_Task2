@@ -7,6 +7,8 @@
 #include <string.h>
 #include <math.h>
 
+#define buffer_size 256
+
 //Define an appropriate struct
 typedef struct {
 	char date[11];
@@ -30,40 +32,34 @@ void tokeniseRecord(const char *input, const char *delimiter, char *date, char *
 
 
 //setting filename
-char *input_filename() {
-    int buffer_size =256;
-    char line[buffer_size];
-    char filename;
-        printf("Input filename: \n");
-        scanf(" %s ", &filename);
-        printf("%s", filename);
 
-        //fgets(line, buffer_size, stdin);
-        //scanf(line, " %s ", filename);
+
+//char *input_filename() {
         
-        printf("helloooo");
-        printf("%s", filename);
-    return filename;
+        //scanf(" %s ", &filename);
+        //printf("%s", filename);
+
+        // fgets(line, buffer_size, stdin);
+        // sscanf(line, " %s ", filename);
+        
+        //printf("helloooo");
+        //printf("%s", filename);
+
     //openfile(filename, "r");
-}
+
 
 //opening file
-FILE *open_file(char *filename, char *mode) {
-    // printf("Input filename: \n");
-    // scanf("%c", &filename);
 
-    //     int buffer_size =256;
-    //     char buffer[buffer_size];
-    //     int line_count=0;
+//int line_count=0;
 
-    // FILE *file= fopen(filename, "r");   //open file in read mode and check it isn't empty
-    //     if (file ==NULL) {
-    //         perror("Error opening file: file is empty. \n");
-    //         return 1;
-    //     }
-    // return file; 
-       printf("Helloo");
-}
+// FILE *open_file(char *filename [], char *mode[]) {
+//     FILE *file= fopen(filename, mode);   //open file in read mode and check it isn't empty
+//       if (file ==NULL) {
+//          perror("Error opening file: file is empty. \n");
+//              return 1;
+//          }
+//     return file; 
+// }
 /**
  * @brief Reads the data from the input file into an array of structs
  *
