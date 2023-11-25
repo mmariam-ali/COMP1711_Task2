@@ -11,6 +11,8 @@
     int intsteps, line_count=0, i;
     int fewest_steps, largest_steps;
     int fewest_steps_index, largest_steps_index;
+    int total_steps;
+    float mean_steps;
 
     char line[100];
     char filename[100];
@@ -138,13 +140,27 @@ void find_largest_steps() { //finds date and time of largest time
             largest_steps_index = i;
         }
     }
-    printf("%d, %d\n", largest_steps, largest_steps_index);
+    //printf("%d, %d\n", largest_steps, largest_steps_index);
     printf("Largest Steps: %s %s\n", fitness_data[largest_steps_index].date,
                                     fitness_data[largest_steps_index].time);
     // for (int i=0; i <line_count; i++) {
     //     printf("%d\n", atoi(fitness_data[i].steps));
     // }
 }
+
+void find_mean_steps() {
+    total_steps=0;
+    for  (int i=0; i < line_count; i++){
+        total_steps= total_steps+ atoi(fitness_data[i].steps);
+    }
+    printf("%d\n", total_steps);
+    mean_steps= total_steps/(float)line_count;
+    //mean_steps= round(mean_steps);
+    printf("%.0f\n", mean_steps); //add up these values yourself and check its correct
+
+
+}
+
 
 int main() {
 
@@ -195,6 +211,7 @@ while (1)
         case 'E':   
         case 'e':
             printf("You have chosen choice E\n");
+            find_mean_steps();
             break;
 
         case 'F': 
