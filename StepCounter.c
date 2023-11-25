@@ -9,12 +9,14 @@
     char choice;
     char record, date[11], time[6], steps[10]; 
     int intsteps, line_count=0, i;
+    int fewest_steps, largest_steps;
+    int fewest_steps_index, largest_steps_index;
 
     char line[100];
     char filename[100];
     char buffer[buffer_size];
 
-    FITNESS_DATA fitness_data[9999];
+    FITNESS_DATA fitness_data[999];
 
 // Global variables for filename and FITNESS_DATA array
 
@@ -56,31 +58,28 @@ void input_filename() {
         //fgets(line, buffer_size, stdin);
         //sscanf(line, " %s ", filename);
         scanf(" %s", filename);
-        while (getchar() != '\n');
-
-    
+        while (getchar() != '\n'); //gets rid of the new line character
 }
 
-//function for opening file, reading through 
-//creating array of structs
+//function for opening file, reading through creating array of structs
 FILE *open_file(char *filename , char *mode) {
     FILE *file= fopen(filename, mode);   //open file in read mode and check it isn't empty
       if (file ==NULL) {
-         perror("Error opening file\n");
+         perror("Error opening file\n");  //if file does not exist
              return 1;
          }
         else 
-            (printf("File successfully loaded.\n"));
+            (printf("File successfully loaded.\n")); //correct file opened
 
       //create struct array 
 
     while (fgets(buffer, buffer_size, file)!= NULL) {   //while the line is not empty
 
-        // tokeniseRecord(buffer, ",", date, time, steps);    //splitting the line into date, time, steps
-        // strcpy(fitness_data[i].date, date);                //assigning date, time and steps to data struct 
-        // strcpy(fitness_data[i].time, time);
-        // strcpy(fitness_data[i].steps, steps);
-        // i++;                                               //does this for every i; every line in the file
+        tokeniseRecord(buffer, ",", date, time, steps);    //splitting the line into date, time, steps
+        strcpy(fitness_data[i].date, date);                //assigning date, time and steps to data struct 
+        strcpy(fitness_data[i].time, time);
+        strcpy(fitness_data[i].steps, steps);
+        i++;                                               //does this for every i; every line in the file
          }
 
     //return 0;
@@ -104,8 +103,48 @@ FILE *total_records(char *filename , char *mode) {
 // Complete the main function
     
 
+void print_records() {
+        for (int i =0; i <3; i++) {                            //prints out date, time and steps of first 3 records.
+            printf("%s/%s/%d\n", fitness_data[i].date,
+                         fitness_data[i].time,
+                         atoi(fitness_data[i].steps));
+                            }
 
+}
 
+void find_fewest_steps() {  //find 
+    fewest_steps= atoi(fitness_data[0].steps);
+    fewest_steps_index = 0;
+    for( int i=0; i < line_count; i++) {
+        if (atoi(fitness_data[i].steps) < fewest_steps) {
+            fewest_steps = atoi(fitness_data[i].steps);
+            fewest_steps_index = i;
+        }
+    }
+    //printf("%d, %d\n", fewest_steps, fewest_steps_index);
+    printf("Fewest Steps: %s %s\n", fitness_data[fewest_steps_index].date,
+                                    fitness_data[fewest_steps_index].time);
+    // for (int i=0; i <line_count; i++) {
+    //     printf("%d\n", atoi(fitness_data[i].steps));
+    // }
+}
+
+void find_largest_steps() { //finds date and time of largest time
+    largest_steps= atoi(fitness_data[0].steps);
+    largest_steps_index = 0;
+    for( int i=0; i < line_count; i++) {
+        if (atoi(fitness_data[i].steps) > largest_steps) {
+            largest_steps = atoi(fitness_data[i].steps);
+            largest_steps_index = i;
+        }
+    }
+    printf("%d, %d\n", largest_steps, largest_steps_index);
+    printf("Largest Steps: %s %s\n", fitness_data[largest_steps_index].date,
+                                    fitness_data[largest_steps_index].time);
+    // for (int i=0; i <line_count; i++) {
+    //     printf("%d\n", atoi(fitness_data[i].steps));
+    // }
+}
 
 int main() {
 
@@ -142,13 +181,15 @@ while (1)
 
         case 'C':
         case 'c':
-            printf("You have chosen choice C\n");
-
+            //printf("You have chosen choice C\n");
+            //print_records();
+            find_fewest_steps();
             break;
 
         case 'D': 
         case 'd':
-            printf("You have chosen choice D\n");
+            //printf("You have chosen choice D\n");
+            find_largest_steps();
             break;
 
         case 'E':   

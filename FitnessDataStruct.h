@@ -13,7 +13,7 @@
 typedef struct {
 	char date[11];
 	char time[6];
-	char steps;
+	char steps[10];
 } FITNESS_DATA;
 
 //Helper function prototypes
