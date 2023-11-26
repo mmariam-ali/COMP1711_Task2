@@ -64,11 +64,11 @@ void input_filename() {
 }
 
 //function for opening file, reading through creating array of structs
-FILE *open_file(char *filename , char *mode) {
+int open_file(char *filename , char *mode) {
     FILE *file= fopen(filename, mode);   //open file in read mode and check it isn't empty
       if (file ==NULL) {
-         perror("Error opening file\n");  //if file does not exist
-             return 1;
+         perror("Error: Could not find or open the file\n");  //if file does not exist
+             exit(0);
          }
         else 
             (printf("File successfully loaded.\n")); //correct file opened
@@ -84,27 +84,28 @@ FILE *open_file(char *filename , char *mode) {
         i++;                                               //does this for every i; every line in the file
          }
 
-    //return 0;
+    return 1;
 }
 
 //function for line count
-FILE *total_records(char *filename , char *mode) {
+int total_records(char *filename , char *mode) {
     FILE *file= fopen(filename, mode);
     line_count=0;
 
     if (file ==NULL) {
-         perror("Error: could not open file\n");
-             return 0;
+         perror("Error: Could not find or open the file\n");
+             exit(0);
          }
       //open file in read mode and check it isn't empty
     while (fgets(buffer, buffer_size, file)!= NULL) {   //while the line is not empty
         line_count++;
     }
     printf("Total records: %d\n", line_count);
+return 1;
 }
 // Complete the main function
     
-
+//test function
 void print_records() {
         for (int i =0; i <3; i++) {                            //prints out date, time and steps of first 3 records.
             printf("%s/%s/%d\n", fitness_data[i].date,
@@ -114,7 +115,7 @@ void print_records() {
 
 }
 
-void find_fewest_steps() {  //find 
+void find_fewest_steps() {  //find fewest steps
     fewest_steps= atoi(fitness_data[0].steps);
     fewest_steps_index = 0;
     for( int i=0; i < line_count; i++) {
@@ -153,12 +154,10 @@ void find_mean_steps() {
     for  (int i=0; i < line_count; i++){
         total_steps= total_steps+ atoi(fitness_data[i].steps);
     }
-    printf("%d\n", total_steps);
+    //printf("%d\n", total_steps);
     mean_steps= total_steps/(float)line_count;
     //mean_steps= round(mean_steps);
-    printf("%.0f\n", mean_steps); //add up these values yourself and check its correct
-
-
+    printf("Mean step count: %.0f\n", mean_steps);
 }
 
 
@@ -210,7 +209,7 @@ while (1)
 
         case 'E':   
         case 'e':
-            printf("You have chosen choice E\n");
+            //printf("You have chosen choice E\n");
             find_mean_steps();
             break;
 
