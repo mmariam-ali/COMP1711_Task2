@@ -161,6 +161,35 @@ void find_mean_steps() {
 }
 
 
+int longest_period_count, period_count;
+int start_index, end_index, j;
+
+void longest_period() {
+    period_count=0;
+    longest_period_count =0;
+
+    for (i=0; i< line_count; i++) {
+        if (atoi(fitness_data[i].steps) >500) {
+            period_count++;
+            start_index=i;
+        
+        }
+        else {
+            //end_index=i;
+            if (period_count> longest_period_count) {
+                longest_period_count = period_count;
+            }
+            else {
+                longest_period_count= longest_period_count;
+            }
+                period_count = 0;
+            }
+        
+        }
+    
+    printf("%d, %d, %d\n", longest_period_count, start_index, end_index);
+}
+
 int main() {
 
 while (1)
@@ -216,6 +245,7 @@ while (1)
         case 'F': 
         case 'f':
             printf("You have chosen choice F\n");
+            longest_period();
             break;
 
         case 'Q':
