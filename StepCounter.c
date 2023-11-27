@@ -67,11 +67,14 @@ void input_filename() {
 int open_file(char *filename , char *mode) {
     FILE *file= fopen(filename, mode);   //open file in read mode and check it isn't empty
       if (file ==NULL) {
-         perror("Error: Could not find or open the file\n");  //if file does not exist
-             exit(0);
+        perror("Error: Could not find or open the file\n");  //if file does not exist
+        return 1;
+        //exit;
          }
         else 
-            (printf("File successfully loaded.\n")); //correct file opened
+            {printf("File successfully loaded.\n");
+            
+        }; //correct file opened
 
       //create struct array 
 
@@ -83,8 +86,9 @@ int open_file(char *filename , char *mode) {
         strcpy(fitness_data[i].steps, steps);
         i++;                                               //does this for every i; every line in the file
          }
-
-    return 1;
+    fclose(file);
+return 0;
+ 
 }
 
 //function for line count
@@ -94,15 +98,13 @@ int total_records(char *filename , char *mode) {
 
     if (file ==NULL) {
          perror("Error: Could not find or open the file\n");
-             exit(0);
+             return 1;
          }
       //open file in read mode and check it isn't empty
     while (fgets(buffer, buffer_size, file)!= NULL) {   //while the line is not empty
         line_count++;
     }
-    printf("Total records: %d\n", line_count);
-return 1;
-}
+    printf("Total records: %d\n", line_count);}
 // Complete the main function
     
 //test function
@@ -125,7 +127,7 @@ void find_fewest_steps() {  //find fewest steps
         }
     }
     //printf("%d, %d\n", fewest_steps, fewest_steps_index);
-    printf("Fewest Steps: %s %s\n", fitness_data[fewest_steps_index].date,
+    printf("Fewest steps: %s %s\n", fitness_data[fewest_steps_index].date,
                                     fitness_data[fewest_steps_index].time);
     // for (int i=0; i <line_count; i++) {
     //     printf("%d\n", atoi(fitness_data[i].steps));
@@ -142,7 +144,7 @@ void find_largest_steps() { //finds date and time of largest time
         }
     }
     //printf("%d, %d\n", largest_steps, largest_steps_index);
-    printf("Largest Steps: %s %s\n", fitness_data[largest_steps_index].date,
+    printf("Largest steps: %s %s\n", fitness_data[largest_steps_index].date,
                                     fitness_data[largest_steps_index].time);
     // for (int i=0; i <line_count; i++) {
     //     printf("%d\n", atoi(fitness_data[i].steps));
@@ -192,7 +194,7 @@ void longest_period() {
 
 int main() {
 
-while (1)
+while (2)
 {       
         printf("\n");
         printf("Menu options:\n");
@@ -213,7 +215,7 @@ while (1)
         case 'A':    //add misspell check
             input_filename();
             open_file(filename, "r");   //program isnt exiting when wrong filename isnt entered
-    
+            //return open_file(filename, "r");
             break;
 
         case 'b':
