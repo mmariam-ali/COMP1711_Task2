@@ -68,16 +68,16 @@ int open_file(char *filename , char *mode) {
     FILE *file= fopen(filename, mode);   //open file in read mode and check it isn't empty
       if (file ==NULL) {
         perror("Error: Could not find or open the file\n");  //if file does not exist
+        exit(1);
         return 1;
-        //exit;
-         }
+        
+    }
         else 
             {printf("File successfully loaded.\n");
             
         }; //correct file opened
 
       //create struct array 
-
     while (fgets(buffer, buffer_size, file)!= NULL) {   //while the line is not empty
 
         tokeniseRecord(buffer, ",", date, time, steps);    //splitting the line into date, time, steps
@@ -86,7 +86,7 @@ int open_file(char *filename , char *mode) {
         strcpy(fitness_data[i].steps, steps);
         i++;                                               //does this for every i; every line in the file
          }
-    fclose(file);
+    //fclose(file);
 return 0;
  
 }
