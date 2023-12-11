@@ -11,6 +11,7 @@
     int intsteps, line_count=0, i;
     int fewest_steps, largest_steps;
     int fewest_steps_index, largest_steps_index;
+    int longest_start_index;
     int total_steps;
     float mean_steps;
 
@@ -70,11 +71,9 @@ int open_file(char *filename , char *mode) {
         perror("Error: Could not find or open the file\n");  //if file does not exist
         exit(1);
         return 1;
-        
     }
         else 
             {printf("File successfully loaded.\n");
-            
         }; //correct file opened
 
       //create struct array 
@@ -86,8 +85,7 @@ int open_file(char *filename , char *mode) {
         strcpy(fitness_data[i].steps, steps);
         i++;                                               //does this for every i; every line in the file
          }
-    //fclose(file);
-return 0;
+    return 0;
  
 }
 
@@ -104,18 +102,9 @@ int total_records(char *filename , char *mode) {
     while (fgets(buffer, buffer_size, file)!= NULL) {   //while the line is not empty
         line_count++;
     }
-    printf("Total records: %d\n", line_count);}
-// Complete the main function
+    printf("Total records: %d\n", line_count);
+    }
     
-//test function
-void print_records() {
-        for (int i =0; i <3; i++) {                            //prints out date, time and steps of first 3 records.
-            printf("%s/%s/%d\n", fitness_data[i].date,
-                         fitness_data[i].time,
-                         atoi(fitness_data[i].steps));
-                            }
-
-}
 
 void find_fewest_steps() {  //find fewest steps
     fewest_steps= atoi(fitness_data[0].steps);
@@ -126,12 +115,9 @@ void find_fewest_steps() {  //find fewest steps
             fewest_steps_index = i;
         }
     }
-    //printf("%d, %d\n", fewest_steps, fewest_steps_index);
     printf("Fewest steps: %s %s\n", fitness_data[fewest_steps_index].date,
                                     fitness_data[fewest_steps_index].time);
-    // for (int i=0; i <line_count; i++) {
-    //     printf("%d\n", atoi(fitness_data[i].steps));
-    // }
+   
 }
 
 void find_largest_steps() { //finds date and time of largest time
@@ -143,12 +129,9 @@ void find_largest_steps() { //finds date and time of largest time
             largest_steps_index = i;
         }
     }
-    //printf("%d, %d\n", largest_steps, largest_steps_index);
     printf("Largest steps: %s %s\n", fitness_data[largest_steps_index].date,
                                     fitness_data[largest_steps_index].time);
-    // for (int i=0; i <line_count; i++) {
-    //     printf("%d\n", atoi(fitness_data[i].steps));
-    // }
+
 }
 
 void find_mean_steps() {
@@ -156,9 +139,8 @@ void find_mean_steps() {
     for  (int i=0; i < line_count; i++){
         total_steps= total_steps+ atoi(fitness_data[i].steps);
     }
-    //printf("%d\n", total_steps);
     mean_steps= total_steps/(float)line_count;
-    //mean_steps= round(mean_steps);
+
     printf("Mean step count: %.0f\n", mean_steps);
 }
 
@@ -166,30 +148,42 @@ void find_mean_steps() {
 int longest_period_count, period_count;
 int start_index, end_index, j;
 
+//this works, but not in the way i intended. welp
 void longest_period() {
     period_count=0;
     longest_period_count =0;
+    longest_start_index=0;
 
     for (i=0; i< line_count; i++) {
-        if (atoi(fitness_data[i].steps) >500) {
-            period_count++;
-            start_index=i;
-        
+        if (atoi(fitness_data[i].steps) >500) { //if steps above 500
+            period_count++; //period count +1
+                if(period_count==1); { 
+                start_index=i;
+            }
         }
-        else {
-            //end_index=i;
-            if (period_count> longest_period_count) {
+        else {  //if steps not above 500
+            //end_index=i;  
+            if (period_count> longest_period_count) { //
                 longest_period_count = period_count;
+                longest_start_index=start_index;
             }
             else {
                 longest_period_count= longest_period_count;
+                longest_start_index=longest_start_index;
             }
-                period_count = 0;
+            period_count = 0;
             }
         
         }
-    
-    printf("%d, %d, %d\n", longest_period_count, start_index, end_index);
+        end_index= longest_start_index-(longest_period_count -1);
+        // end_index= longest_start_index+(longest_period_count -1);
+
+
+    //printf("%d, %d, %d\n", longest_period_count, longest_start_index, end_index);
+    //printf("%d, %d, %d\n", longest_period_count, end_index, longest_start_index);
+    printf("Longest period start: %s %s\n", fitness_data[end_index].date, fitness_data[end_index].time);
+    printf("Longest period end: %s %s\n", fitness_data[longest_start_index].date, fitness_data[longest_start_index].time );
+
 }
 
 int main() {
@@ -206,47 +200,38 @@ while (2)
         printf("F: Find the longest continuous period where the step count is above 500 steps \n");        
         printf("Q: Quit \n");
         printf("Enter choice: ");
-        //scanf("%s", &choice);
         choice = getchar(); //prevents from printing again unnecessarily
         while (getchar() != '\n');
 
     switch (choice){
         case 'a':
-        case 'A':    //add misspell check
+        case 'A':   
             input_filename();
             open_file(filename, "r");   //program isnt exiting when wrong filename isnt entered
-            //return open_file(filename, "r");
             break;
 
         case 'b':
         case 'B':
-            //printf("You have chosen choice B\n");
-            //open_file(filename, "r");
             total_records(filename, "r");
             break;
 
         case 'C':
         case 'c':
-            //printf("You have chosen choice C\n");
-            //print_records();
             find_fewest_steps();
             break;
 
         case 'D': 
         case 'd':
-            //printf("You have chosen choice D\n");
             find_largest_steps();
             break;
 
         case 'E':   
         case 'e':
-            //printf("You have chosen choice E\n");
             find_mean_steps();
             break;
 
         case 'F': 
         case 'f':
-            printf("You have chosen choice F\n");
             longest_period();
             break;
 
